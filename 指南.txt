@@ -1,0 +1,111 @@
+# Python 爬虫学习路线
+
+## 一、Python 基础
+- 学习 Python 基础语法  
+  - 变量、数据类型、运算符  
+  - 条件语句、循环语句  
+  - 函数与模块  
+  - 异常处理  
+- 学习常用内置库  
+  - `os`、`re`、`json`、`time`、`random`  
+  - `urllib`（网络请求入门）
+
+---
+
+## 二、网络基础
+- HTTP 协议基础
+  - 请求与响应
+  - GET / POST 区别
+  - 常见状态码（200, 301, 404, 500）
+- 浏览器与开发者工具使用
+  - 元素定位
+  - 抓包工具（F12 / Charles / Fiddler）
+
+---
+
+## 三、静态网页爬取
+- 学习 `requests` 库
+  - 发送 GET / POST 请求
+  - 处理请求头、Cookies、Session
+- 学习 `BeautifulSoup4` / `lxml`
+  - HTML 解析
+  - 标签定位、属性提取
+- 学习 `re` 正则表达式进行数据提取
+
+---
+
+## 四、数据存储
+- 文本存储
+  - `.txt` / `.csv` 文件
+- 数据库存储
+  - `SQLite` 基础
+  - `MySQL` / `MongoDB` 简单使用
+- 序列化
+  - `json` 数据保存
+
+---
+
+## 五、动态网页爬取
+- `Selenium`  
+  - 模拟浏览器操作（点击、滚动、输入）
+  - 爬取需要登录的网站
+- `Pyppeteer` / `Playwright`  
+  - 无头浏览器爬虫
+
+---
+
+## 六、反爬与应对
+- 常见反爬措施
+  - User-Agent 限制
+  - Cookies 验证
+  - IP 限制
+  - 验证码
+- 应对方法
+  - 设置请求头、代理 IP
+  - 使用 `fake_useragent`
+  - `requests.Session` 保持会话
+  - 验证码识别思路（打码平台 / OCR）
+
+---
+
+## 七、进阶爬虫框架
+- `Scrapy`  
+  - 项目结构
+  - 爬虫编写与调度
+  - 管道（Pipeline）存储
+  - 中间件（Middleware）处理
+- `Scrapy-Redis`  
+  - 分布式爬虫实现
+- `pyspider`（可视化爬虫框架）
+
+---
+
+## 八、综合实战项目
+- 新闻网站爬虫（静态页面）
+- 电商商品数据爬虫（动态页面）
+- 电影信息爬虫（反爬处理）
+- 招聘网站爬虫（数据库存储）
+- 多线程 / 异步爬虫（提高效率）
+
+---
+
+## 九、扩展与提升
+- 并发与异步
+  - `multiprocessing` / `threading`
+  - `asyncio` / `aiohttp`
+- 分布式爬虫
+  - `Scrapy-Redis`
+  - `Kafka + Redis` 消息队列
+- 数据清洗与分析
+  - `pandas` 数据处理
+  - `matplotlib` / `seaborn` 可视化
+
+---
+
+## 十、学习资料推荐
+- 《Python 网络数据采集》  
+- 《精通 Scrapy 网络爬虫》  
+- 官方文档：  
+  - [Requests](https://requests.readthedocs.io)  
+  - [Scrapy](https://scrapy.org/)  
+- CSDN / Bilibili 教程  

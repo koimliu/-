@@ -1,0 +1,58 @@
+- 
+
+# Python `os` 库常用方法对照表
+
+## 一、系统信息
+| 方法             | 说明                                           | 示例                 |
+| ---------------- | ---------------------------------------------- | -------------------- |
+| `os.name`        | 操作系统类型 (`nt`=Windows, `posix`=Linux/Mac) | `print(os.name)`     |
+| `os.getcwd()`    | 获取当前工作目录                               | `print(os.getcwd())` |
+| `os.chdir(path)` | 切换工作目录                                   | `os.chdir("..")`     |
+
+---
+
+## 二、文件和目录操作
+| 方法                  | 说明             | 示例                          |
+| --------------------- | ---------------- | ----------------------------- |
+| `os.mkdir(path)`      | 创建单层目录     | `os.mkdir("test")`            |
+| `os.makedirs(path)`   | 递归创建多层目录 | `os.makedirs("a/b/c")`        |
+| `os.rmdir(path)`      | 删除空目录       | `os.rmdir("test")`            |
+| `os.removedirs(path)` | 递归删除空目录   | `os.removedirs("a/b/c")`      |
+| `os.listdir(path)`    | 列出目录下内容   | `os.listdir(".")`             |
+| `os.remove(path)`     | 删除文件         | `os.remove("a.txt")`          |
+| `os.rename(src, dst)` | 文件/目录重命名  | `os.rename("a.txt", "b.txt")` |
+
+---
+
+## 三、路径操作 (`os.path`)
+| 方法                     | 说明                  | 示例                                       |
+| ------------------------ | --------------------- | ------------------------------------------ |
+| `os.path.basename(path)` | 获取文件名            | `basename("C:/a/b.txt") -> b.txt`          |
+| `os.path.dirname(path)`  | 获取目录名            | `dirname("C:/a/b.txt") -> C:/a`            |
+| `os.path.split(path)`    | 拆分路径 (目录, 文件) | `split("C:/a/b.txt") -> ('C:/a', 'b.txt')` |
+| `os.path.splitext(path)` | 拆分文件与扩展名      | `splitext("b.txt") -> ('b', '.txt')`       |
+| `os.path.join(a, b)`     | 路径拼接              | `join("C:/a", "b.txt") -> C:/a/b.txt`      |
+| `os.path.exists(path)`   | 判断路径是否存在      | `exists("a.txt")`                          |
+| `os.path.isabs(path)`    | 判断是否为绝对路径    | `isabs("C:/a")`                            |
+| `os.path.isfile(path)`   | 判断是否为文件        | `isfile("a.txt")`                          |
+| `os.path.isdir(path)`    | 判断是否为目录        | `isdir("C:/a")`                            |
+
+---
+
+## 四、系统命令与环境变量
+| 方法                     | 说明             | 示例                      |
+| ------------------------ | ---------------- | ------------------------- |
+| `os.system(cmd)`         | 执行系统命令     | `os.system("echo Hello")` |
+| `os.environ`             | 获取所有环境变量 | `print(os.environ)`       |
+| `os.environ.get("PATH")` | 获取指定环境变量 | `os.environ.get("PATH")`  |
+
+---
+
+## 五、目录遍历
+| 方法            | 说明             | 示例 |
+| --------------- | ---------------- | ---- |
+| `os.walk(path)` | 遍历目录及子目录 |      |
+```python
+for root, dirs, files in os.walk("."):
+    for file in files:
+        print(os.path.join(root, file))
