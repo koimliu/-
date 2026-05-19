@@ -19,6 +19,4 @@
 ------
 
 ## **许可证 (License)**
-
-本项目中由我个人编写的部分遵循 [MIT License](https://www.qianwen.com/chat/LICENSE)。
 *注：收录的第三方开源项目版权归原作者所有，请遵循其各自的开源协议。*
