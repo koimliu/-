@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Every Day I&#39;m Shufflin&#39; 🃏</title>
+<style>
+body {
+    margin: 0 auto;
+    height: 100vh;
+    background: radial-gradient(circle, #082475 67%, #e4a700 67.5%, #a46829, #c80000, #7c1415, #000000);
+}
+#cursorCurl {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    user-select: none;
+    pointer-events: none;
+}
+#cursorCurl > path {
+/*     acts as a smoothing effect */
+    transition: 100ms;
+}
+a {
+    cursor: pointer;
+    float: right;
+    padding: 20px;
+}
+marker {
+    transition: 200ms;
+}
+</style>
+
+</head>
+
+<body translate="no">
+  <svg id="cursorCurl" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+        <marker id="cards" viewBox="0 0 50 70" refX="25" refY="35" markerWidth="25" markerHeight="35" orient="auto-start-reverse">
+        <pattern id="dots" viewBox="0 0 20 20" width="28%" height="20%">
+            <rect height="100%" width="100%" fill="#f5f5f5" />
+            <g fill="#13563b">
+                <circle cx="0" cy="0" r="1" />
+                <circle cx="20" cy="0" r="1" />
+                <circle cx="0" cy="20" r="1" />
+                <circle cx="20" cy="20" r="1" />
+            </g>
+            <path d="M 3 3 l5 5 M 17 3 l -5 5 M 17 17 l -5 -5 M 3 17 l 5 -5" stroke="#13563b" stroke-width="0.3" />
+            <path d="M 8 9 h4 l1 1 l -3 2.5 l -3 -2.5z M7.5 10h5 M 8 9l1 1l1 -1l1 1l1 -1l1 1M10 12.5l-1 -2.5M10 12.5l1 -2.5" fill="none" stroke="#13563b" stroke-width="0.2" />
+        </pattern>
+        <rect height="69.5" width="49.5" x=".25" y=".25" fill="url(#dots)" rx="4" stroke="#ccc" stroke-width="0.5" />
+    </marker>
+    </defs>
+</svg>
+
+      <script id="rendered-js" >
+// for intro motion
+let mouseMoved = false;
+const pointer = {
+  x: 0.5 * window.innerWidth,
+  y: 0.5 * window.innerHeight };
+
+const params = {
+  pointsNumber: 26,
+  widthFactor: 0.3,
+  spring: 0.7,
+  friction: 0.4 };
+
+const trail = new Array(params.pointsNumber);
+for (let i = 0; i < params.pointsNumber; i++) {
+  trail[i] = {
+    x: pointer.x,
+    y: pointer.y,
+    dx: 0,
+    dy: 0 };
+
+}
+window.addEventListener("click", e => {
+  updateMousePosition(e.pageX, e.pageY);
+});
+window.addEventListener("mousemove", e => {
+  mouseMoved = true;
+  updateMousePosition(e.pageX, e.pageY);
+});
+window.addEventListener("touchmove", e => {
+  mouseMoved = true;
+  updateMousePosition(e.targetTouches[0].pageX, e.targetTouches[0].pageY);
+});
+
+function updateMousePosition(eX, eY) {
+  pointer.x = eX;
+  pointer.y = eY;
+}
+
+function update(t) {
+  // for intro motion
+  if (!mouseMoved) {
+    pointer.x = (0.5 + 0.3 * Math.cos(0.001 * t) * Math.sin(0.005 * t)) * window.innerWidth;
+    pointer.y = (0.5 + 0.2 * Math.cos(0.005 * t) + 0.1 * Math.cos(0.01 * t)) * window.innerHeight;
+  }
+  trail.forEach((p, pIdx) => {
+    const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
+    const spring = pIdx === 0 ? 0.4 * params.spring : params.spring;
+    p.dx += (prev.x - p.x) * spring;
+    p.dy += (prev.y - p.y) * spring;
+    p.dx *= params.friction;
+    p.dy *= params.friction;
+    p.x += p.dx;
+    p.y += p.dy;
+    // Append path to SVG
+    if (!populated && pIdx !== 0) {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const attributes = {
+        id: `t${pIdx}`,
+        stroke: 'none',
+        "stroke-width": 5,
+        fill: "none" };
+
+      Object.keys(attributes).forEach(attr => path.setAttribute(attr, attributes[attr]));
+      const svg = document.querySelector("#cursorCurl");
+      const firstChild = svg.firstChild;
+      svg.insertBefore(path, firstChild);
+    }
+    
+    const path = document.querySelector(`#t${pIdx}`);
+    const prevX = pIdx === 0 ? pointer.x : trail[pIdx - 1].x;
+    const prevY = pIdx === 0 ? pointer.y : trail[pIdx - 1].y;
+    const xc = 0.5 * (p.x + prevX);
+    const yc = 0.5 * (p.y + prevY);
+    if (path) {
+      const pathString = `M${prevX} ${prevY} Q ${prevX} ${prevY} ${xc} ${yc} L ${p.x} ${p.y}`;
+      path.setAttribute("d", pathString);
+      path.setAttribute("stroke-width", 5);
+      if (pIdx === 1) {
+        path.setAttribute('marker-mid', 'url(#cards)');
+      } else {
+    
+        path.setAttribute('marker-end', 'url(#cards)');
+        path.setAttribute('marker-mid', 'url(#cards)');
+      }
+    }
+  });
+  populated = true;
+  window.requestAnimationFrame(update);
+}
+
+function sizeSVGViewBox() {
+  document.querySelector("#cursorCurl").setAttribute("viewBox", `0 0 ${window.innerWidth} ${window.innerHeight}`);
+}
+
+let populated = false;
+sizeSVGViewBox();
+update(0);
+window.addEventListener("resize", sizeSVGViewBox);
+    </script>
+</body>
+</html>

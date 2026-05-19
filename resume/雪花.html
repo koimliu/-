@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #fff;
+}
+
+/* snow */
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    color: white;
+    font-size: 1em;
+    user-select: none;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+</style>
+</head>
+
+<body translate="no">
+
+
+      <script id="rendered-js" >
+// Settings
+const snowflakeCount = 100; // Number of snowflakes
+const snowflakeIcons = ["❄", "✻", "❅", "❆"]; // Different snowflake icons
+
+// Function to generate random numbers
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// Function to create snowflakes
+function createSnowflake() {
+  const snowflake = document.createElement("div");
+  snowflake.className = "snowflake";
+  snowflake.textContent =
+  snowflakeIcons[Math.floor(Math.random() * snowflakeIcons.length)];
+  snowflake.style.left = `${randomBetween(0, 100)}vw`;
+  snowflake.style.fontSize = `${randomBetween(10, 30)}px`;
+  snowflake.style.animationDuration = `${randomBetween(5, 15)}s`;
+  snowflake.style.animationDelay = `${randomBetween(0, 5)}s`;
+  document.body.appendChild(snowflake);
+
+  // Remove the snowflake after the animatie
+  snowflake.addEventListener("animationend", () => {
+    snowflake.remove();
+  });
+}
+
+// Repeat snowflakes
+setInterval(createSnowflake, 200);
+
+// Voor initiële sneeuw
+for (let i = 0; i < snowflakeCount; i++) {
+  createSnowflake();
+}
+
+    </script>
+</body>
+
+</html>
